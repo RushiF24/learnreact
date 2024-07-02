@@ -7,28 +7,28 @@ const LanguageKnownDetails = (props) => {
   return (
     <div>
       <h3>Languages you know</h3>
-      {languages.map((lang) => {
-        return (
-          <div className="row g-3 align-items-center my-2 justify-content-evenly">
-            <InputComponent
-              type="checkbox"
-              name={lang}
-              text={lang.charAt(0).toUpperCase()+lang.slice(1)}
-            />
-            {abilities.map((ability) => {
-              return (
-                <InputComponent
-                  type="checkbox"
-                  name={ability}
-                  text={ability}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
-      <button onClick={props.prev}>Prev</button>
-      <button onClick={props.next}>Next</button>
+      {languages.map((lang, index) => (
+        <div
+          className="row g-3 align-items-center my-2 justify-content-evenly"
+          key={index}
+        >
+          <InputComponent
+            type="checkbox"
+            name={`languages.${index}.language`}
+            text={lang.charAt(0).toUpperCase() + lang.slice(1)}
+            value={lang}
+          />
+          {abilities.map((ability, index2) => {
+            return (
+              <InputComponent type="checkbox" name={`languages.${index}.abilities`} text={ability} value={ability} key={index2}/>
+            );
+          })}
+        </div>
+      ))}
+      <button type="button" onClick={props.prev}>
+        Prev
+      </button>
+      <button type="submit">Next</button>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import PreferanceDetails from "./PreferanceDetails";
 
 import { validationSchema } from "./validationSchema";
 
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 
 const JobForm = () => {
   const next = () => {
@@ -31,8 +31,14 @@ const JobForm = () => {
   ];
 
   const [step, setStep] = useState(1);
-  const currentValidationSchema = validationSchema[step];
-  const isLastStep = step === forms.length - 1;
+  // console.log("----------------------------------============",step)
+  const currentValidationSchema = validationSchema[step-1];
+  // useEffect(() => {
+  //   console.log("-------------------------------->>>>>>>>>>>>",step)
+  // }, [step])
+  
+  // const isLastStep = step === forms.length - 1;
+  // console.log('++++++++++', isLastStep)
 
   // switch(step){
   //     case 1:
@@ -52,10 +58,16 @@ const JobForm = () => {
   //     default:
   //         return <div>Multistep form</div>
   // }
-  const handleSubmit = () => {
-    if (isLastStep) {
+  const handleSubmit = (values, actions) => {
+    // console.log("hiiiiiiiiiiiiiiii" ,values);
+    if (step===7) {
+      console.log("final data", values)
       alert(`Dear, Your account has been created successfully`);
     } else {
+      // console.log("__----------------",values, actions)
+      setStep(step + 1);
+      actions.setTouched({});
+      actions.setSubmitting(false);
     }
   };
   const initialValue = {
@@ -71,9 +83,16 @@ const JobForm = () => {
     relationship: "",
     zipcode: "",
     dob: "",
-    // course: "",
-    // passingyear: "",
-    // pecentage: ""
+    education: [{course: "", passingyear: "", percentage: ""}],
+    workexperience: [{companyname:"", designation:"", from:"", to:""}],
+    languages: [{language: "", abilities: []}],
+    technologies: [{tech:"", level:""}],
+    refrances: [{refname: "", contactno: "", relation: ""}],
+    prefferedlocation: "",
+    noticeperiode: "",
+    department: "",
+    expectedctc: "",
+    currentctc: ""
   };
   return (
     <div>
@@ -83,10 +102,13 @@ const JobForm = () => {
         onSubmit={handleSubmit}
         validateOnChange={false}
         validationSchema={currentValidationSchema}
-      />
-      <form action="/" method="post" className="m-5">
-        {step <= 7 && forms[step - 1]}
-      </form>
+      >
+        {/* {({ isSubmitting, handleSubmit }) => ( */}
+          <Form className="m-5">
+            {step <= 7 && forms[step - 1]}
+          </Form>
+        {/* )} */}
+      </Formik>
     </div>
   );
 };

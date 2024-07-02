@@ -1,10 +1,15 @@
 import React from 'react'
+import {Field, useField } from 'formik'
 
 const TextBox = (props) => {
+  const [field, meta] = useField(props);
   return (
     <div className="col-auto">
-          <label for={props.name}>{props.text}:</label>
-          <textarea name={props.name} id={props.name} cols="24" rows="3"></textarea>
+          <label htmlFor={props.name}>{props.text}:</label>
+          <Field as="textarea" {...field} {...props} cols="24" rows="3"></Field>
+          {meta.touched && meta.error ? (
+         <div className="error" style={{ fontSize: "15px", color: "red" }}>{meta.error}</div>
+       ) : null}
     </div>
   )
 }

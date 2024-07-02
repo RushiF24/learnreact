@@ -1,14 +1,15 @@
+import { Field } from "formik";
 import React from "react";
 
 const SelectComponent = (props) => {
   return (
     <div className="col-auto">
-      <label for={props.name}>{props.text}:</label>
-      <select name={props.name} id="state">
-      {props.options.map((option)=>{
-         return <option value={option.value} className="check" >{option.text}</option>
+      <label htmlFor={props.name}>{props.text}:</label>
+      <Field as="select" name={props.name} id="state">
+      {props.options.map((option, index)=>{
+         return <option key={index} value={option.value} className="check" >{option.text}</option>
       })}
-      </select>
+      </Field>
     </div>
   );
 };

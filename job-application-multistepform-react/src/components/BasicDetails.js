@@ -63,7 +63,7 @@ const BasicDetails = (props) => {
 
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
         <InputComponent type="tel" name="phoneNumber" text="Phone Number" />
-        {/* <label for="state">State:</label>
+        {/* <label htmlhtmlFor="state">State:</label>
           <select name="state" id="state">
             <option
               value=""
@@ -83,7 +83,7 @@ const BasicDetails = (props) => {
       </div>
 
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
-        {/* <label for="city">City:</label>
+        {/* <label htmlFor="city">City:</label>
           <select name="city" id="city">
             <option value="" checked>
               Ahmedabad
@@ -92,17 +92,35 @@ const BasicDetails = (props) => {
             <option value="">Rajkot</option>
           </select> */}
         <SelectComponent name="city" text="City" options={cityOptions} />
-        <div className="col-auto">
-          <label for="gender">Gender:</label>
+        {/* <div className="col-auto">
+          <label htmlFor="gender">Gender:</label>
           <input type="radio" name="gender" id="male" value="male" />
-          <label for="male">Male</label>
+          <label htmlFor="male">Male</label>
           <input type="radio" name="gender" id="female" value="female" />
-          <label for="female">Female</label>
+          <label htmlFor="female">Female</label>
+        </div> */}
+        {/* <InputComponent text="gender"/> */}
+        <div className="col-auto">
+          <div className="row g-3 align-items-center my-2 justify-content-evenly">
+            <label htmlFor="gender">Gender:</label>
+            <InputComponent
+              type="radio"
+              name="gender"
+              text="Male"
+              value="male"
+            />
+            <InputComponent
+              type="radio"
+              name="gender"
+              text="Female"
+              value="female"
+            />
+          </div>
         </div>
       </div>
 
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
-        {/* <label for="relationship">RelationShip Status:</label>
+        {/* <label htmlFor="relationship">RelationShip Status:</label>
           <select name="relationship" id="relation">
             <option value="" hidden checked></option>
             <option value="single" className="check">
@@ -123,7 +141,7 @@ const BasicDetails = (props) => {
       <div className="row g-3 align-items-center my-2 justify-content-evenly ">
         <InputComponent type="date" name="dob" text="dob" />
       </div>
-      <button type="submit" >Next</button>
+      <button type="submit">Next</button>
     </div>
   );
 };

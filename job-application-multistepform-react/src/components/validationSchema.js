@@ -13,14 +13,18 @@ export const validationSchema = [
       .required("Email is required"),
     designation: Yup.string()
       .required("Designation is required")
-      .max(15, "Must be 15 characters or less"),
+      .max(25, "Must be 25 characters or less"),
     phoneNumber: Yup.number()
       .required("Phone Number is required")
       .min(10, "Phone Number field should be more than 10 characters"),
+      // .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, 'Phone number is not valid'),
     zipcode: Yup.string()
       .length(5)
       .matches(/^[0-9]{5}/)
       .required()
-      .zipcode('Invalida zip code'),
+      .label('Invalida zip code'),
+    address: Yup.string()
+    .required()
   }),
+  // Yup.object.
 ];

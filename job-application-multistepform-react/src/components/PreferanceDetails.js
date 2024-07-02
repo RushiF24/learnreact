@@ -36,7 +36,7 @@ const PreferanceDetails = (props) => {
       <h3>PreferanceDetails</h3>
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
         <SelectComponent
-          name="location"
+          name="prefferedLocation"
           text="Prefered Location"
           options={locationsOptions}
         />
@@ -63,7 +63,8 @@ const PreferanceDetails = (props) => {
         />
         </div>
       </div>
-      <button onClick={props.prev}>Prev</button>
+      <button type="button" onClick={props.prev}>Prev</button>
+      <button type="submit">Submit</button>
     </div>
   );
 };

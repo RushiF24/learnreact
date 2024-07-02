@@ -7,24 +7,28 @@ const TechKnownDetails = (props) => {
   return (
     <div>
       <h3>Technologies you know</h3>
-      {techs.map((tech) => {
+      {techs.map((tech, index) => {
         return (
-          <div className="row g-3 align-items-center my-2 justify-content-evenly">
+          <div
+            className="row g-3 align-items-center my-2 justify-content-evenly"
+            key={index}
+          >
             <InputComponent
               type="checkbox"
-              name={tech}
+              name={`technologies.${index}.tech`}
               text={tech.charAt(0).toUpperCase() + tech.slice(1)}
+              value={tech}
             />
-            {levels.map((level) => {
-              return (
-                <InputComponent type="radio" name={tech} text={level} />
-              );
+            {levels.map((level, index2) => {
+              return <InputComponent type="radio" name={`technologies.${index}.level`} text={level} value={level} key={index2}/>;
             })}
           </div>
         );
       })}
-      <button onClick={props.prev}>Prev</button>
-      <button onClick={props.next}>Next</button>
+      <button type="button" onClick={props.prev}>
+        Prev
+      </button>
+      <button type="submit">Next</button>
     </div>
   );
 };
