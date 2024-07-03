@@ -31,14 +31,9 @@ const JobForm = () => {
   ];
 
   const [step, setStep] = useState(1);
-  // console.log("----------------------------------============",step)
   const currentValidationSchema = validationSchema[step-1];
-  // useEffect(() => {
-  //   console.log("-------------------------------->>>>>>>>>>>>",step)
-  // }, [step])
   
   // const isLastStep = step === forms.length - 1;
-  // console.log('++++++++++', isLastStep)
 
   // switch(step){
   //     case 1:
@@ -64,7 +59,7 @@ const JobForm = () => {
       console.log("final data", values)
       alert(`Dear, Your account has been created successfully`);
     } else {
-      // console.log("__----------------",values, actions)
+      console.log("__----------------",values, actions)
       setStep(step + 1);
       actions.setTouched({});
       actions.setSubmitting(false);
@@ -85,7 +80,7 @@ const JobForm = () => {
     dob: "",
     education: [{course: "", passingyear: "", percentage: ""}],
     workexperience: [{companyname:"", designation:"", from:"", to:""}],
-    languages: [{language: "", abilities: []}],
+    languages: [{language: "", abilities: ""}],
     technologies: [{tech:"", level:""}],
     refrances: [{refname: "", contactno: "", relation: ""}],
     prefferedlocation: "",

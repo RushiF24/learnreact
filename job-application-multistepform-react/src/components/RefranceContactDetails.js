@@ -14,7 +14,7 @@ const RefranceContactDetails = (props) => {
               <div className="row g-3 align-items-center my-2 justify-content-evenly" key={index}>
                 <InputComponent type="text" name={`refrances.${index}.refname`} text="Name" />
                 <InputComponent
-                  type="text"
+                  type="tel"
                   name={`refrances.${index}.contactno`}
                   text="Contact Number"
                 />
