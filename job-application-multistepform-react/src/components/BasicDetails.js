@@ -1,37 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import InputComponent from "./utilitycomponents/InputComponent";
 import SelectComponent from "./utilitycomponents/SelectComponent";
 import TextBox from "./utilitycomponents/TextBox";
 
+import { State, City } from "country-state-city"; 
+
 const BasicDetails = (props) => {
-  const stateOptions = [
-    {
-      value: "gujarat",
-      text: "Gujarat",
-    },
-    {
-      value: "maharashtra",
-      text: "Maharashtra",
-    },
-    {
-      value: "rajsthan",
-      text: "Rajsthan",
-    },
-  ];
-  const cityOptions = [
-    {
-      value: "ahemedabad",
-      text: "Ahemedabad",
-    },
-    {
-      value: "rajkot",
-      text: "Rajkot",
-    },
-    {
-      value: "surat",
-      text: "Surat",
-    },
-  ];
+  const [selectedState, setSelectedState] = useState('AN')
+  const onChnageHandler = (event) => {
+    console.log(event);
+    setSelectedState(event.target.value)
+  }
+  // const stateOptions = [ 
+  //   {
+  //     value: "gujarat",
+  //     text: "Gujarat",
+  //   },
+  //   {
+  //     value: "maharashtra",
+  //     text: "Maharashtra",
+  //   },
+  //   {
+  //     value: "rajsthan",
+  //     text: "Rajsthan",
+  //   },
+  // ];
+  const stateOptions = State.getStatesOfCountry('IN').map(state=>({
+    value: state.name,
+    text: state.name
+  }))
+  const cityOptions = City.getCitiesOfState('IN', 'GJ').map(city => ({
+    value: city.name,
+    displayValue: city.name
+}))
+  // const cityOptions = [
+  //   {
+  //     value: "ahemedabad",
+  //     text: "Ahemedabad",
+  //   },
+  //   {
+  //     value: "rajkot",
+  //     text: "Rajkot",
+  //   },
+  //   {
+  //     value: "surat",
+  //     text: "Surat",
+  //   },
+  // ];
 
   const relationshipOptions = [
     {
@@ -79,7 +94,7 @@ const BasicDetails = (props) => {
               Rajsthan
             </option>
           </select> */}
-        <SelectComponent name="state" text="State" options={stateOptions} />
+        <SelectComponent name="state" text="State" options={stateOptions} value={selectedState} onChnageHandler={onChnageHandler}/>
       </div>
 
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
