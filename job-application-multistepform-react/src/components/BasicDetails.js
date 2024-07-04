@@ -1,53 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputComponent from "./utilitycomponents/InputComponent";
 import SelectComponent from "./utilitycomponents/SelectComponent";
 import TextBox from "./utilitycomponents/TextBox";
 
-import { State, City } from "country-state-city"; 
+import { useFormikContext } from "formik";
+import { City, State } from "country-state-city";
 
 const BasicDetails = (props) => {
-  const [selectedState, setSelectedState] = useState('AN')
-  const onChnageHandler = (event) => {
-    console.log(event);
-    setSelectedState(event.target.value)
-  }
-  // const stateOptions = [ 
-  //   {
-  //     value: "gujarat",
-  //     text: "Gujarat",
-  //   },
-  //   {
-  //     value: "maharashtra",
-  //     text: "Maharashtra",
-  //   },
-  //   {
-  //     value: "rajsthan",
-  //     text: "Rajsthan",
-  //   },
-  // ];
-  const stateOptions = State.getStatesOfCountry('IN').map(state=>({
-    value: state.name,
-    text: state.name
-  }))
-  const cityOptions = City.getCitiesOfState('IN', 'GJ').map(city => ({
-    value: city.name,
-    displayValue: city.name
-}))
-  // const cityOptions = [
-  //   {
-  //     value: "ahemedabad",
-  //     text: "Ahemedabad",
-  //   },
-  //   {
-  //     value: "rajkot",
-  //     text: "Rajkot",
-  //   },
-  //   {
-  //     value: "surat",
-  //     text: "Surat",
-  //   },
-  // ];
-
   const relationshipOptions = [
     {
       value: "single",
@@ -59,9 +18,62 @@ const BasicDetails = (props) => {
     },
   ];
 
+  const stateOptions = State.getStatesOfCountry("IN").map((state) => ({
+    value: state.isoCode,
+    text: state.name,
+  }));
+
+  const { values, setFieldValue } = useFormikContext();
+  const [selectedState, setSelectedState] = useState(stateOptions[0].value);
+
+  const cityOptions = City.getCitiesOfState("IN", selectedState).map(
+    (city) => ({
+      value: city.name,
+      text: city.name,
+    })
+  );
+  const [selectedCity, setSelectedCity] = useState(cityOptions[0].value);
+  const onStateChnageHandler = (event) => {
+    const stateVal = event.target.value;
+    setSelectedState(stateVal);
+    setFieldValue("state", stateVal);
+  };
+  const onCityChangeHandler = (event) => {
+    // const cityVal = event.target.value;
+    // setSelectedState(cityVal);
+    // setFieldValue("state", cityVal);
+  };
+  const onCityStateChnageHandler = (event) => {
+    if (event.target.name === "state") {
+      console.log("state nu", event.target.value);
+      // setSelectedState(
+      //   State.getStatesOfCountry("IN").filter(
+      //     (state) => state.isoCode === event.target.value
+      //   )[0].isoCode
+      // );
+      setFieldValue("state", event.target.value);
+    } else if (event.target.name === "city") {
+      console.log("city nu", event.target.value);
+      setSelectedCity(event.target.value);
+      setFieldValue("city", selectedCity);
+    } else {
+      setFieldValue(event.target.name, event.target.value);
+    }
+  };
+  const onChnageHandler = (event) => {
+    console.log(
+      "hiojiuiyuttoy",
+      event.target.name,
+      event.target.value,
+      setFieldValue
+    );
+    setFieldValue(event.target.name, event.target.value);
+  };
   return (
     <div className="mb-3">
       <h3>Basic Details</h3>
+      <h1>{selectedState}</h1>
+      <h1>{selectedCity}</h1>
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
         <InputComponent type="text" name="firstname" text="First Name" />
         <InputComponent type="text" name="lastname" text="Last Name" />
@@ -94,7 +106,21 @@ const BasicDetails = (props) => {
               Rajsthan
             </option>
           </select> */}
-        <SelectComponent name="state" text="State" options={stateOptions} value={selectedState} onChnageHandler={onChnageHandler}/>
+        <SelectComponent
+          name="state"
+          text="State"
+          options={stateOptions}
+          value={selectedState}
+          onChange={
+            onStateChnageHandler
+            // (event) =>
+            // setSelectedState(
+            //   State.getStatesOfCountry("IN").filter(
+            //     (state) => state.isoCode === event.target.value
+            //   )[0].isoCode
+            // )
+          }
+        />
       </div>
 
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
@@ -106,7 +132,13 @@ const BasicDetails = (props) => {
             <option value="">Vadodara</option>
             <option value="">Rajkot</option>
           </select> */}
-        <SelectComponent name="city" text="City" options={cityOptions} />
+        <SelectComponent
+          name="city"
+          text="City"
+          options={cityOptions}
+          value={selectedCity}
+          onChange={onCityChangeHandler}
+        />
         {/* <div className="col-auto">
           <label htmlFor="gender">Gender:</label>
           <input type="radio" name="gender" id="male" value="male" />
@@ -149,6 +181,7 @@ const BasicDetails = (props) => {
           name="relationship"
           text="RelationShip Status"
           options={relationshipOptions}
+          onChange={onChnageHandler}
         />
         <InputComponent type="number" name="zipcode" text="Zip Code" />
       </div>

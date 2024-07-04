@@ -6,6 +6,7 @@ const LanguageKnownDetails = (props) => {
   // const { values } = useFormikContext();
   const languages = ["hindi", "english", "gujarati"];
   const abilities = ["read", "write", "speak"];
+  
   return (
     <div>
       <h3>Languages you know</h3>

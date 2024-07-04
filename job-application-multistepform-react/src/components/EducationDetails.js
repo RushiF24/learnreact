@@ -4,8 +4,8 @@ import InputComponent from "./utilitycomponents/InputComponent";
 import { FieldArray, useFormikContext } from "formik";
 
 const EducationDetails = (props) => {
-  const { values } = useFormikContext();
-  
+  const { values,setFieldValue } = useFormikContext('')
+
   const educationOptions = [
     {
       value: "ssc",
@@ -20,6 +20,11 @@ const EducationDetails = (props) => {
       text: "Bachelor",
     },
   ];
+  const onChnageHandler = (event) =>{
+  console.log('hiojiuiyuttoy',event.target.name, event.target.value, setFieldValue);
+    setFieldValue(event.target.name, event.target.value);
+  }
+
   return (
     <div>
       <h3>Educational Details</h3>
@@ -27,12 +32,16 @@ const EducationDetails = (props) => {
         {({ push, pop }) => (
           <>
             {values.education.map((edu, index) => (
-              <div className="row g-3 align-items-center my-2 justify-content-evenly" key={index}>
+              <div
+                className="row g-3 align-items-center my-2 justify-content-evenly"
+                key={index}
+              >
                 <SelectComponent
                   name={`education.${index}.course`}
                   // name={edu.course}
                   text="Course"
                   options={educationOptions}
+                  onChange={onChnageHandler}
                 />
                 <InputComponent
                   type="number"
@@ -72,7 +81,9 @@ const EducationDetails = (props) => {
         )}
       </FieldArray>
 
-      <button type="button" onClick={props.prev}>Prev</button>
+      <button type="button" onClick={props.prev}>
+        Prev
+      </button>
       <button type="submit">Next</button>
     </div>
   );

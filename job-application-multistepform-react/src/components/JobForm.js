@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import BasicDetails from "./BasicDetails";
 import EducationDetails from "./EducationDetails";
 import WorkExpDetails from "./WorkExpDetails";
@@ -9,7 +10,9 @@ import PreferanceDetails from "./PreferanceDetails";
 
 import { validationSchema } from "./validationSchema";
 
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormikContext } from "formik";
+import { State, City } from "country-state-city";
+
 
 const JobForm = () => {
   const next = () => {
@@ -20,8 +23,9 @@ const JobForm = () => {
     console.log(step);
     setStep(step - 1);
   };
+
   const forms = [
-    <BasicDetails next={next} prev={prev} />,
+  <BasicDetails next={next} prev={prev} />,
     <EducationDetails next={next} prev={prev} />,
     <WorkExpDetails next={next} prev={prev} />,
     <LanguageKnownDetails next={next} prev={prev} />,
@@ -32,32 +36,10 @@ const JobForm = () => {
 
   const [step, setStep] = useState(1);
   const currentValidationSchema = validationSchema[step-1];
-  
-  // const isLastStep = step === forms.length - 1;
-
-  // switch(step){
-  //     case 1:
-  //         return <BasicDetails next={next}/>
-  //     case 2:
-  //         return <EducationDetails next={next}/>
-  //     case 3:
-  //         return <WorkExpDetails next={next}/>
-  //     case 4:
-  //         return <LanguageKnownDetails next={next}/>
-  //     case 5:
-  //         return <TechKnownDetails next={next}/>
-  //     case 6:
-  //         return <RefranceContactDetails next={next}/>
-  //     case 7:
-  //         return <PreferanceDetails next={next}/>
-  //     default:
-  //         return <div>Multistep form</div>
-  // }
   const handleSubmit = (values, actions) => {
-    // console.log("hiiiiiiiiiiiiiiii" ,values);
     if (step===7) {
       console.log("final data", values)
-      alert(`Dear, Your account has been created successfully`);
+      alert(`Dear, Your account has been created successfully`);  
     } else {
       console.log("__----------------",values, actions)
       setStep(step + 1);
@@ -98,11 +80,12 @@ const JobForm = () => {
         validateOnChange={false}
         validationSchema={currentValidationSchema}
       >
-        {/* {({ isSubmitting, handleSubmit }) => ( */}
+      {/* {({values})=> ( */}
+
           <Form className="m-5">
-            {step <= 7 && forms[step - 1]}
+            {forms[step-1]}
           </Form>
-        {/* )} */}
+      {/* )} */}
       </Formik>
     </div>
   );

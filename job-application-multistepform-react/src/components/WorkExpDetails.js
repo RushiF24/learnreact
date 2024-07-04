@@ -4,6 +4,7 @@ import { FieldArray, useFormikContext } from "formik";
 
 const WorkExpDetails = (props) => {
   const { values } = useFormikContext(props.name);
+  
   // console.log("in work exp value is ", values);
   return (
     <div>

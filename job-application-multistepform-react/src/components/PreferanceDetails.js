@@ -1,8 +1,10 @@
 import React from "react";
 import SelectComponent from "./utilitycomponents/SelectComponent";
 import InputComponent from "./utilitycomponents/InputComponent";
+import { useFormikContext } from "formik";
 
 const PreferanceDetails = (props) => {
+  const { values, setFieldValue } = useFormikContext();
   const locationsOptions = [
     {
       value: "ahmedabad",
@@ -31,6 +33,9 @@ const PreferanceDetails = (props) => {
       text: "Marketing",
     },
   ];
+  const onChnageHandler = (event) => {
+    setFieldValue(event.target.name, event.target.value)
+  }
   return (
     <div>
       <h3>PreferanceDetails</h3>
@@ -39,11 +44,14 @@ const PreferanceDetails = (props) => {
           name="prefferedLocation"
           text="Prefered Location"
           options={locationsOptions}
+          value={locationsOptions[0].value}
+          onChnageHandler={onChnageHandler}
         />
         <InputComponent
           type="number"
           name="noticeperiode"
           text="Notice Period"
+          placeholder="(in months)"
         />
         <SelectComponent
           name="department"
