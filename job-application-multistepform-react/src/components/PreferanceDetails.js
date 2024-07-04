@@ -4,7 +4,7 @@ import InputComponent from "./utilitycomponents/InputComponent";
 import { useFormikContext } from "formik";
 
 const PreferanceDetails = (props) => {
-  const { values, setFieldValue } = useFormikContext();
+  const { setFieldValue } = useFormikContext();
   const locationsOptions = [
     {
       value: "ahmedabad",

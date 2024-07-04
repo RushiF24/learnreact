@@ -10,9 +10,7 @@ import PreferanceDetails from "./PreferanceDetails";
 
 import { validationSchema } from "./validationSchema";
 
-import { Form, Formik, useFormikContext } from "formik";
-import { State, City } from "country-state-city";
-
+import { Form, Formik } from "formik";
 
 const JobForm = () => {
   const next = () => {
@@ -24,24 +22,17 @@ const JobForm = () => {
     setStep(step - 1);
   };
 
-  const forms = [
-  <BasicDetails next={next} prev={prev} />,
-    <EducationDetails next={next} prev={prev} />,
-    <WorkExpDetails next={next} prev={prev} />,
-    <LanguageKnownDetails next={next} prev={prev} />,
-    <TechKnownDetails next={next} prev={prev} />,
-    <RefranceContactDetails next={next} prev={prev} />,
-    <PreferanceDetails next={next} prev={prev} />,
-  ];
+  const forms = [BasicDetails, EducationDetails, WorkExpDetails, LanguageKnownDetails, TechKnownDetails, RefranceContactDetails, PreferanceDetails];
 
   const [step, setStep] = useState(1);
-  const currentValidationSchema = validationSchema[step-1];
+  const CurrentStepComponent = forms[step - 1];
+  const currentValidationSchema = validationSchema[step - 1];
   const handleSubmit = (values, actions) => {
-    if (step===7) {
+    if (step === 7) {
       console.log("final data", values)
-      alert(`Dear, Your account has been created successfully`);  
+      alert(`Dear, Your account has been created successfully`);
     } else {
-      console.log("__----------------",values, actions)
+      console.log("__----------------", values, actions)
       setStep(step + 1);
       actions.setTouched({});
       actions.setSubmitting(false);
@@ -60,11 +51,11 @@ const JobForm = () => {
     relationship: "",
     zipcode: "",
     dob: "",
-    education: [{course: "", passingyear: "", percentage: ""}],
-    workexperience: [{companyname:"", designation:"", from:"", to:""}],
-    languages: [{language: "", abilities: ""}],
-    technologies: [{tech:"", level:""}],
-    refrances: [{refname: "", contactno: "", relation: ""}],
+    education: [{ course: "", passingyear: "", percentage: "" }],
+    workexperience: [{ companyname: "", designation: "", from: "", to: "" }],
+    languages: [{ language: "", abilities: "" }],
+    technologies: [{ tech: "", level: "" }],
+    refrances: [{ refname: "", contactno: "", relation: "" }],
     prefferedlocation: "",
     noticeperiode: "",
     department: "",
@@ -80,12 +71,13 @@ const JobForm = () => {
         validateOnChange={false}
         validationSchema={currentValidationSchema}
       >
-      {/* {({values})=> ( */}
+        {({ values, setFieldValue }) => (
 
           <Form className="m-5">
-            {forms[step-1]}
+            <CurrentStepComponent next={next} prev={prev} values={values} setFieldValue={setFieldValue} />
+            {/* {forms[step-1]} */}
           </Form>
-      {/* )} */}
+        )}
       </Formik>
     </div>
   );

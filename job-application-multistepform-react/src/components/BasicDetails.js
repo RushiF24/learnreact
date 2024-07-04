@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import InputComponent from "./utilitycomponents/InputComponent";
 import SelectComponent from "./utilitycomponents/SelectComponent";
 import TextBox from "./utilitycomponents/TextBox";
-
-import { useFormikContext } from "formik";
 import { City, State } from "country-state-city";
 
-const BasicDetails = (props) => {
+const BasicDetails = ({ values, setFieldValue }) => {
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
   const relationshipOptions = [
     {
       value: "single",
@@ -18,62 +18,75 @@ const BasicDetails = (props) => {
     },
   ];
 
-  const stateOptions = State.getStatesOfCountry("IN").map((state) => ({
+  useEffect(() => {
+    setStates(State.getStatesOfCountry('IN')); // Assuming you are using India
+  }, []);
+
+  useEffect(() => {
+    if (values.state) {
+      setCities(City.getCitiesOfState('IN', values.state));
+    }
+    console.log(cities)
+  }, [values.state]);
+
+  const stateOptions = states.map((state) => ({
     value: state.isoCode,
     text: state.name,
   }));
 
-  const { values, setFieldValue } = useFormikContext();
-  const [selectedState, setSelectedState] = useState(stateOptions[0].value);
+  // const { values, setFieldValue } = useFormikContext();
+  // const [selectedState, setSelectedState] = useState(stateOptions[0].value);
 
-  const cityOptions = City.getCitiesOfState("IN", selectedState).map(
+  const cityOptions = cities.map(
     (city) => ({
       value: city.name,
       text: city.name,
     })
   );
-  const [selectedCity, setSelectedCity] = useState(cityOptions[0].value);
-  const onStateChnageHandler = (event) => {
+  // const [selectedCity, setSelectedCity] = useState(cityOptions[0].value);
+  const onStateChangeHandler = (event) => {
     const stateVal = event.target.value;
-    setSelectedState(stateVal);
+    // setSelectedState(stateVal);
     setFieldValue("state", stateVal);
-  };
-  const onCityChangeHandler = (event) => {
-    // const cityVal = event.target.value;
-    // setSelectedState(cityVal);
-    // setFieldValue("state", cityVal);
-  };
-  const onCityStateChnageHandler = (event) => {
-    if (event.target.name === "state") {
-      console.log("state nu", event.target.value);
-      // setSelectedState(
-      //   State.getStatesOfCountry("IN").filter(
-      //     (state) => state.isoCode === event.target.value
-      //   )[0].isoCode
-      // );
-      setFieldValue("state", event.target.value);
-    } else if (event.target.name === "city") {
-      console.log("city nu", event.target.value);
-      setSelectedCity(event.target.value);
-      setFieldValue("city", selectedCity);
-    } else {
-      setFieldValue(event.target.name, event.target.value);
+    if (values.state !== event.target.value) {
+      setFieldValue('city', '');
     }
+    
   };
-  const onChnageHandler = (event) => {
-    console.log(
-      "hiojiuiyuttoy",
-      event.target.name,
-      event.target.value,
-      setFieldValue
-    );
-    setFieldValue(event.target.name, event.target.value);
-  };
+  // const onCityChangeHandler = (event) => {
+  //   // const cityVal = event.target.value;
+  //   // setSelectedState(cityVal);
+  //   // setFieldValue("state", cityVal);
+  // };
+  // const onCityStateChnageHandler = (event) => {
+  //   if (event.target.name === "state") {
+  //     console.log("state nu", event.target.value);
+  //     // setSelectedState(
+  //     //   State.getStatesOfCountry("IN").filter(
+  //     //     (state) => state.isoCode === event.target.value
+  //     //   )[0].isoCode
+  //     // );
+  //     setFieldValue("state", event.target.value);
+  //   } else if (event.target.name === "city") {
+  //     console.log("city nu", event.target.value);
+  //     setSelectedCity(event.target.value);
+  //     setFieldValue("city", selectedCity);
+  //   } else {
+  //     setFieldValue(event.target.name, event.target.value);
+  //   }
+  // };
+  // const onChnageHandler = (event) => {
+  //   console.log(
+  //     "hiojiuiyuttoy",
+  //     event.target.name,
+  //     event.target.value,
+  //     setFieldValue
+  //   );
+  //   setFieldValue(event.target.name, event.target.value);
+  // };
   return (
     <div className="mb-3">
       <h3>Basic Details</h3>
-      <h1>{selectedState}</h1>
-      <h1>{selectedCity}</h1>
       <div className="row g-3 align-items-center my-2 justify-content-evenly">
         <InputComponent type="text" name="firstname" text="First Name" />
         <InputComponent type="text" name="lastname" text="Last Name" />
@@ -110,9 +123,9 @@ const BasicDetails = (props) => {
           name="state"
           text="State"
           options={stateOptions}
-          value={selectedState}
           onChange={
-            onStateChnageHandler
+            onStateChangeHandler
+            // e => setFieldValue('state', e.target.value)
             // (event) =>
             // setSelectedState(
             //   State.getStatesOfCountry("IN").filter(
@@ -136,8 +149,7 @@ const BasicDetails = (props) => {
           name="city"
           text="City"
           options={cityOptions}
-          value={selectedCity}
-          onChange={onCityChangeHandler}
+          onChange={e => setFieldValue('city', e.target.value)}
         />
         {/* <div className="col-auto">
           <label htmlFor="gender">Gender:</label>
@@ -181,7 +193,6 @@ const BasicDetails = (props) => {
           name="relationship"
           text="RelationShip Status"
           options={relationshipOptions}
-          onChange={onChnageHandler}
         />
         <InputComponent type="number" name="zipcode" text="Zip Code" />
       </div>

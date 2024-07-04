@@ -14,6 +14,12 @@ export const validationSchema = [
     designation: Yup.string()
       .required("Designation is required")
       .max(25, "Must be 25 characters or less"),
+    state: Yup.string()
+      .required("state is required"),
+    city: Yup.string()
+      .required("city is required"),
+    relationship: Yup.string()
+      .required("relationship is required"),
     // phoneNumber: Yup.number()
     //   .required("Phone Number is required")
     //   .min(10, "Phone Number field should be more than 10 characters"),
@@ -77,21 +83,21 @@ export const validationSchema = [
       Yup.object().shape({
         refname: Yup.string(),
         contactno: Yup.number()
-        .required("Phone Number is required")
-        .min(10, "Phone Number field should be more than 10 characters"),
+          .required("Phone Number is required")
+          .min(10, "Phone Number field should be more than 10 characters"),
         relation: Yup.string().max(20, "Must be 10 characters or less"),
       })
     ),
   }),
   Yup.object().shape({
-      prefferedlocation: Yup.string(),
-      noticeperiode: Yup.number()
-        .required("Last Name is required")
-        .min(1, "Must be upto 12 number or less")
-        .max(12, "Must be upto 12 number or less"),
-      department: Yup.string(),
-      expectedctc: Yup.number(),
-      currentctc: Yup.number(),
+    prefferedlocation: Yup.string(),
+    noticeperiode: Yup.number()
+      .required("Last Name is required")
+      .min(1, "Must be upto 12 number or less")
+      .max(12, "Must be upto 12 number or less"),
+    department: Yup.string(),
+    expectedctc: Yup.number(),
+    currentctc: Yup.number(),
   })
   // .required("Last Name is required")
   // .max(4, "Must be 4 characters or less"),
