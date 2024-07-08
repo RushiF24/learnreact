@@ -1,18 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
+import AddTodo from './components/AddTodo';
+import Todo from './components/Todo';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-          Learn React1
-      </header>
-      <h1>Larning redux</h1>
-
+      <h1>Learning redux</h1>
+      <AddTodo />
+      <Todo />  
     </div>
   );
 }
