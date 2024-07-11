@@ -1,48 +1,78 @@
 import { useState } from "react";
-import Card from "../UI/Card";
-import ExpenseItem from "./ExpenseItem";
+import Card from "../UI/Card";   
 import "./Expenses.css";
 import ExpenseFilter from "./ExpenseFilter";
+import ExpensesList from "./ExpensesList";
+import Chart from "../Chart/Chart";
 
 const Expenses = (props) => {
-  const [filteredYear, seFilteredYear] = useState('2020')
+  const [filteredYear, seFilteredYear] = useState("2020");
 
-  const filterChnageHandler = (val) => {
-      seFilteredYear(val)
-  }
+  const filterChangeHandler = (val) => {
+    seFilteredYear(val);
+  };
+  const filteredExpenses = props.expenses.filter(
+    (expense) => expense.date.getFullYear().toString() === filteredYear
+  );
 
+  const datapoints = [
+    {
+      label: 'Jan',
+      value: 0
+    },
+    {
+      label: 'Feb',
+      value: 0
+    },
+    {
+      label: 'Mar',
+      value: 0
+    },
+    {
+      label: 'April',
+      value: 0
+    },
+    {
+      label: 'May',
+      value: 0
+    },
+    {
+      label: 'Jun',
+      value: 0
+    },
+    {
+      label: 'Jul',
+      value: 0
+    },
+    {
+      label: 'Aug',
+      value: 0
+    },
+    {
+      label: 'Sep',
+      value: 0
+    },
+    {
+      label: 'Oct',
+      value: 0
+    },
+    {
+      label: 'Nov',
+      value: 0
+    },
+    {
+      label: 'Dec',
+      value: 0
+    }
+  ]
   return (
     <Card className="expenses">
-    <ExpenseFilter selected={filteredYear}  onChangeFilter={filterChnageHandler} />
-      {props.expenses.map((exp) => (
-        <ExpenseItem
-          title={exp.title}
-          amount={exp.amount}
-          date={exp.date}
-        ></ExpenseItem>
-        
-      ))}
-      {/* <ExpenseItem
-        title={props.expenses[0].title}
-        amount={props.expenses[0].amount}
-        date={props.expenses[0].date}
-      >
-      </ExpenseItem>
-      <ExpenseItem
-        title={props.expenses[1].title}
-        amount={props.expenses[1].amount}
-        date={props.expenses[1].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.expenses[2].title}
-        amount={props.expenses[2].amount}
-        date={props.expenses[2].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.expenses[3].title}
-        amount={props.expenses[3].amount}
-        date={props.expenses[3].date}
-      ></ExpenseItem> */}
+      <ExpenseFilter
+        selected={filteredYear}
+        onChangeFilter={filterChangeHandler}
+      />
+      <Chart datapoints={datapoints}/>
+      <ExpensesList filteredExpenses={filteredExpenses}/>
     </Card>
   );
 };
