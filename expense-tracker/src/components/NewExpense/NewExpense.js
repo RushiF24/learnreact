@@ -6,9 +6,7 @@ import './NewExpense.css'
 const NewExpense = (props) => {
     const [show, setShow] = useState(false)
 
-    const saveExpenseHandler = (newExpenseData) => {
-        console.log("in new expenses");
-        const expenseData = {
+    const saveExpenseHandler = (newExpenseData) => {       const expenseData = {
             ...newExpenseData,
             id: Math.random()
         }
